@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 1</title>
+
+    <script>
+        function task_1() {
+            var cT;
+            var msg;
+            var fT;
+            var userC = prompt("Задайте температуру в градусах Цельсия");
+            cT = userC.replace(/[^0-9+.-]/g, "");
+            msg = "Введено: " + userC + "\n";
+            msg += "Берем " + cT + "\u00b0C \n";
+            if (cT == "") {
+                cT = 0;
+                msg = "В строке " + userC + " нет значения. Берем 0\u00b0C \n";
+            }
+
+            fT = (9 / 5) * cT + 32;
+            msg += "Получаем " + fT + "\u00b0F";
+            alert(msg);
+        }
+
+        function task_2() {
+            var admin = "";
+            var name = "Василий";
+            admin = name;
+            alert("admin - " + admin);
+        }
+
+        function task_5() {
+            var a = 10;
+            var b = 20;
+            msg = "Было: a=" + a + "; b=" + b;
+            b = b + a;
+            a = b - a;
+            b = b - a;
+
+            alert(msg + "\nСтало: a=" + a + "; b=" + b);
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <h2><a href="#" onclick="task_1();">Задание №1</a></h2>
+    <h2><a href="#" onclick="task_2();">Задание №2</a></h2>
+    <h2>Задание №3</h2>
+    <p>Будет выведено 1000108</p>
+    <h2>Задание №4</h2>
+    <p>Async и defer не блокируют отрисовку страницы.</p>
+    <P>На практике defer используется для скриптов, которым требуется доступ ко всему DOM и/или важен их относительный
+        порядок выполнения.</p>
+    <p>А async хорош для независимых скриптов, например счётчиков и рекламы, относительный порядок выполнения которых не
+        играет роли.</p>
+    <h2><a href="#" onclick="task_5();">Задание №5</a></h2>
+
+</body>
+
+</html>
