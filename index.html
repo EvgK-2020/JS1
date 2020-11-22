@@ -4,63 +4,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesson 1</title>
+    <title>Lesson 2</title>
 
     <script>
-        function task_1() {
-            var cT;
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        function task_3() {
             var msg;
-            var fT;
-            var userC = prompt("Задайте температуру в градусах Цельсия");
-            cT = userC.replace(/[^0-9+.-]/g, "");
-            msg = "Введено: " + userC + "\n";
-            msg += "Берем " + cT + "\u00b0C \n";
-            if (cT == "") {
-                cT = 0;
-                msg = "В строке " + userC + " нет значения. Берем 0\u00b0C \n";
+            var min = -9007199254740991;
+            var max = 9007199254740991;
+            // var a = -12;
+            // var b = -8;
+            var a = getRandomInt(min, max);
+            var b = getRandomInt(min, max);
+
+            if (a >= 0 && b >= 0) {
+                msg = "a=" + a + "; b=" + b + "\nразность: ";
+                alert(msg + (a - b));
             }
-
-            fT = (9 / 5) * cT + 32;
-            msg += "Получаем " + fT + "\u00b0F";
-            alert(msg);
+            else if (a < 0 && b < 0) {
+                msg = "a=" + a + "; b=" + b + "\nпроизведение: ";
+                alert(msg + (a * b));
+            }
+            else {
+                msg = "a=" + a + "; b=" + b + "\nсумма: ";
+                alert(msg + (a + b));
+            }
         }
 
-        function task_2() {
-            var admin = "";
-            var name = "Василий";
-            admin = name;
-            alert("admin - " + admin);
+        function task_4() {
+            // var a = 15;
+            var a = getRandomInt(0, 15);
+            var msg = "Вывод от " + a + " до 15:\n";
+            switch (a) {
+                case 0:
+                    msg += "0\n";
+                case 1:
+                    msg += "1\n";
+                case 2:
+                    msg += "2\n";
+                case 3:
+                    msg += "3\n";
+                case 4:
+                    msg += "4\n";
+                case 5:
+                    msg += "5\n";
+                case 6:
+                    msg += "6\n";
+                case 7:
+                    msg += "7\n";
+                case 8:
+                    msg += "8\n";
+                case 9:
+                    msg += "9\n";
+                case 10:
+                    msg += "10\n";
+                case 11:
+                    msg += "11\n";
+                case 12:
+                    msg += "12\n";
+                case 13:
+                    msg += "13\n";
+                case 14:
+                    msg += "14\n";
+                case 15:
+                    msg += "15\n";
+                default:
+                    alert(msg);
+            }
         }
 
-        function task_5() {
-            var a = 10;
-            var b = 20;
-            msg = "Было: a=" + a + "; b=" + b;
-            b = b + a;
-            a = b - a;
-            b = b - a;
-
-            alert(msg + "\nСтало: a=" + a + "; b=" + b);
+        function calcAddition(a, b) {
+            var result = +a + +b;
+            return result;
         }
 
+        function calcSubtraction(a, b) {
+            var result = a - b;
+            return result;
+        }
+
+        function calcMultiplication(a, b) {
+            var result = a * b;
+            return result;
+        }
+
+        function calcDivision(a, b) {
+            var result = a / b;
+            return result;
+        }
+
+        function task_6() {
+            var a = document.getElementById("arg1").value;
+            var b = document.getElementById("arg2").value;
+            var operationVal = document.getElementsByName('operation');
+            for (var i = 0; i < operationVal.length; i++) {
+                if (operationVal[i].type === 'radio' && operationVal[i].checked) {
+                    operation = operationVal[i].value;
+                    msg = document.getElementById("labelChoice" + ++i).innerHTML;
+                }
+            }
+            switch (operation) {
+                case "Addition":
+                    result = calcAddition(a, b);
+                    break;
+                case "Subtraction":
+                    result = calcSubtraction(a, b);
+                    break;
+                case "Multiplication":
+                    result = calcMultiplication(a, b);
+                    break;
+                case "Division":
+                    result = calcDivision(a, b);
+                    break;
+            }
+            alert("Первое число: " + a + "; второе число: " + b + ". Действие: " + msg + "\nРезультат: " + result);
+        }
+
+        function task_7() {
+            var a = 0;
+            var b = null;
+            if (a == b) {
+                alert(typeof (a));
+                alert(typeof (b));
+                alert("==");
+            }
+            else {
+                alert("0 != null\n0 - " + typeof (a) + "; null - " + typeof (b));
+            }
+        }
+
+        function power(val, pow, result = val) {
+            if (pow > 1) {
+                result = result * val;
+                return power(val, --pow, result);
+            }
+            else {
+                return result;
+            }
+        }
+
+
+        function task_8() {
+            // var val = 5;
+            // var pow = -3;
+            var val = getRandomInt(-1000, 1000);
+            var pow = getRandomInt(-300, 300);
+            var result = "";
+            if (pow > 0) {
+                result = power(val, pow);
+            }
+            else if (pow < 0) {
+                result = 1 / power(val, Math.abs(pow));
+            }
+            else {
+                result = 1;
+            }
+            alert(val + " в " + pow + " степени = " + result);
+        }
     </script>
 
 </head>
 
 <body>
-
-    <h2><a href="#" onclick="task_1();">Задание №1</a></h2>
-    <h2><a href="#" onclick="task_2();">Задание №2</a></h2>
-    <h2>Задание №3</h2>
-    <p>Будет выведено 1000108</p>
-    <h2>Задание №4</h2>
-    <p>Async и defer не блокируют отрисовку страницы.</p>
-    <P>На практике defer используется для скриптов, которым требуется доступ ко всему DOM и/или важен их относительный
-        порядок выполнения.</p>
-    <p>А async хорош для независимых скриптов, например счётчиков и рекламы, относительный порядок выполнения которых не
-        играет роли.</p>
-    <h2><a href="#" onclick="task_5();">Задание №5</a></h2>
-
+    <h2>Задание №1</h2>
+    <P>1 присвоение - префиксный инкремент - сначала а(1) увеличивается на единицу(2) и потом это значение присваевается
+        с: с=1+a=1+1=2.
+        <br>
+        2 присвоение - постфиксный инкремент - сначала значение b(1) присваевается d, потом b увеличивается на единицу:
+        d=b=1.
+        <br>
+        3 присвоение - к 2 прибавляется a c префиксным инкрементом - а(2) увеличивается на единицу(3):
+        c=2+1+a=2+1+2=2+3=5.
+        <br>
+        4 присвоение - к 2 прибавляется b c постфиксным инкрементом - b(2) увеличение b на единицу происходит после
+        сложения: d=2+b=2+2=4.
+        <br>
+        a - a=1 при объявлении переменной, a=2 после инкремента в первом присвоении, а=3 после инкремента в 3
+        присвоении.
+        <br>
+        b - b=1 при объявлении переменной, b=2 после инкремента во втором присвоении, b=3 после инкремента в 4
+        присвоении.
+    </P>
+    <h2>Задание №2</h2>
+    <p>Будет выведено 5:
+        <br>x = 1 + (a = a * 2)</p>
+    <h2><a href="#" onclick="task_3();">Задание №3</a></h2>
+    <h2><a href="#" onclick="task_4();">Задание №4</a></h2>
+    <h2>Задание №5, №6</h2>
+    <form action="#" onsubmit="task_6();">
+        <label for="arg1">Число 1</label>
+        <input type="number" id="arg1" name="arg1" required>
+        <br>
+        <label for="arg2">Число 2</label>
+        <input type="number" id="arg2" name="arg2" required>
+        <br>
+        <input type="radio" id="operationChoice1" name="operation" value="Addition" required>
+        <label for="operationChoice1" id="labelChoice1">Сложение</label>
+        <input type="radio" id="operationChoice2" name="operation" value="Subtraction">
+        <label for="operationChoice2" id="labelChoice2">Вычитание</label>
+        <input type="radio" id="operationChoice3" name="operation" value="Multiplication">
+        <label for="operationChoice3" id="labelChoice3">Умножение</label>
+        <input type="radio" id="operationChoice4" name="operation" value="Division">
+        <label for="operationChoice4" id="labelChoice4">Деление</label>
+        <br>
+        <input type="submit">
+    </form>
+    <h2><a href="#" onclick="task_7();">Задание №7</a></h2>
+    <h2><a href="#" onclick="task_8();">Задание №8</a></h2>
 </body>
 
 </html>
