@@ -4,43 +4,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesson 1</title>
+    <title>Lesson 3</title>
 
     <script>
         function task_1() {
-            var cT;
-            var msg;
-            var fT;
-            var userC = prompt("Задайте температуру в градусах Цельсия");
-            cT = userC.replace(/[^0-9+.-]/g, "");
-            msg = "Введено: " + userC + "\n";
-            msg += "Берем " + cT + "\u00b0C \n";
-            if (cT == "") {
-                cT = 0;
-                msg = "В строке " + userC + " нет значения. Берем 0\u00b0C \n";
+            var n = 100;
+            var i = 0;
+            var divisor = 2;
+            answer = "";
+            simple = "";
+            while (i < n) {
+                if (i == 2) {
+                    simple = i + ", ";
+                }
+                divisor = 2;
+                while (divisor < i) {
+                    if (i % divisor == 0) {
+                        simple = "";
+                        break;
+                    }
+                    simple = i + ", ";
+                    divisor++;
+                }
+                i++;
+                answer += simple;
             }
-
-            fT = (9 / 5) * cT + 32;
-            msg += "Получаем " + fT + "\u00b0F";
-            alert(msg);
+            answer = answer.slice(0, -2);
+            alert("Простые числа от 0 до " + n + "\n" + answer);
         }
 
-        function task_2() {
-            var admin = "";
-            var name = "Василий";
-            admin = name;
-            alert("admin - " + admin);
+        function countBasketPrice(cart) {
+            var r = 0;
+            for (var item of cart) {
+                r += item.price * item.count;
+            }
+            return r;
         }
+
+        function task_3() {
+            var cart = [
+                {
+                    title: "Товар 1",
+                    price: 100,
+                    count: 1
+                },
+                {
+                    title: "Товар 2",
+                    price: 200,
+                    count: 1
+                },
+                {
+                    title: "Товар 3",
+                    price: 300,
+                    count: 5
+                },
+                {
+                    title: "Товар 4",
+                    price: 730,
+                    count: 1
+                }
+            ]
+            alert("Стоимость товаров в корзине: " + countBasketPrice(cart));
+        }
+
+        function task_4() {
+            for (var i = 0; i < 10; console.log(i++)) { }
+        }
+
 
         function task_5() {
-            var a = 10;
-            var b = 20;
-            msg = "Было: a=" + a + "; b=" + b;
-            b = b + a;
-            a = b - a;
-            b = b - a;
-
-            alert(msg + "\nСтало: a=" + a + "; b=" + b);
+            var str = "";
+            for (var i = 1; i <= 20; i++) {
+                str = "";
+                for (var x = 1; x <= i; x++) {
+                    str += "x";
+                }
+                console.log(str);
+            }
         }
 
     </script>
@@ -50,15 +90,8 @@
 <body>
 
     <h2><a href="#" onclick="task_1();">Задание №1</a></h2>
-    <h2><a href="#" onclick="task_2();">Задание №2</a></h2>
-    <h2>Задание №3</h2>
-    <p>Будет выведено 1000108</p>
-    <h2>Задание №4</h2>
-    <p>Async и defer не блокируют отрисовку страницы.</p>
-    <P>На практике defer используется для скриптов, которым требуется доступ ко всему DOM и/или важен их относительный
-        порядок выполнения.</p>
-    <p>А async хорош для независимых скриптов, например счётчиков и рекламы, относительный порядок выполнения которых не
-        играет роли.</p>
+    <h2><a href="#" onclick="task_3();">Задание №2,3</a></h2>
+    <h2><a href="#" onclick="task_4();">Задание №4</a></h2>
     <h2><a href="#" onclick="task_5();">Задание №5</a></h2>
 
 </body>
