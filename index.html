@@ -4,43 +4,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesson 1</title>
+    <title>Lesson 5</title>
+
+    <link rel="stylesheet" href="css.css">
 
     <script>
-        function task_1() {
-            var cT;
-            var msg;
-            var fT;
-            var userC = prompt("Задайте температуру в градусах Цельсия");
-            cT = userC.replace(/[^0-9+.-]/g, "");
-            msg = "Введено: " + userC + "\n";
-            msg += "Берем " + cT + "\u00b0C \n";
-            if (cT == "") {
-                cT = 0;
-                msg = "В строке " + userC + " нет значения. Берем 0\u00b0C \n";
+        var whitePieces, blackPieces;
+        whitePieces = {
+            piece1: {
+                "piece": "King",
+                "position": "e1"
+            },
+            pieces: {
+                "piece": "Queen",
+                "position": "d1"
+            },
+            piece3: {
+                "piece": "Rook",
+                "position": "a1"
+            },
+            piece4: {
+                "piece": "Rook",
+                "position": "h1"
+            },
+            piece5: {
+                "piece": "Knight",
+                "position": "b1"
+            },
+            piece6: {
+                "piece": "Knight",
+                "position": "g1"
+            },
+            piece7: {
+                "piece": "Bishop",
+                "position": "c1"
+            },
+            piece8: {
+                "piece": "Bishop",
+                "position": "f1"
+            },
+            piece9: {
+                "piece": "Pawn",
+                "position": "a2"
+            },
+            piece10: {
+                "piece": "Pawn",
+                "position": "b2"
+            },
+            piece11: {
+                "piece": "Pawn",
+                "position": "c2"
+            },
+            piece12: {
+                "piece": "Pawn",
+                "position": "d2"
+            },
+            piece13: {
+                "piece": "Pawn",
+                "position": "e2"
+            },
+            piece14: {
+                "piece": "Pawn",
+                "position": "f2"
+            },
+            piece15: {
+                "piece": "Pawn",
+                "position": "g2"
+            },
+            piece16: {
+                "piece": "Pawn",
+                "position": "h2"
             }
+        };
+        blackPieces = {
+            piece1: {
+                "piece": "King",
+                "position": "e8"
+            },
+            pieces: {
+                "piece": "Queen",
+                "position": "d8"
+            },
+            piece3: {
+                "piece": "Rook",
+                "position": "a8"
+            },
+            piece4: {
+                "piece": "Rook",
+                "position": "h8"
+            },
+            piece5: {
+                "piece": "Knight",
+                "position": "b8"
+            },
+            piece6: {
+                "piece": "Knight",
+                "position": "g8"
+            },
+            piece7: {
+                "piece": "Bishop",
+                "position": "c8"
+            },
+            piece8: {
+                "piece": "Bishop",
+                "position": "f8"
+            },
+            piece9: {
+                "piece": "Pawn",
+                "position": "a7"
+            },
+            piece10: {
+                "piece": "Pawn",
+                "position": "b7"
+            },
+            piece11: {
+                "piece": "Pawn",
+                "position": "c7"
+            },
+            piece12: {
+                "piece": "Pawn",
+                "position": "d7"
+            },
+            piece13: {
+                "piece": "Pawn",
+                "position": "e7"
+            },
+            piece14: {
+                "piece": "Pawn",
+                "position": "f7"
+            },
+            piece15: {
+                "piece": "Pawn",
+                "position": "g7"
+            },
+            piece16: {
+                "piece": "Pawn",
+                "position": "h7"
+            }
+        };
 
-            fT = (9 / 5) * cT + 32;
-            msg += "Получаем " + fT + "\u00b0F";
-            alert(msg);
+        function designation(piece, t) {
+            var pieces = [];
+            pieces["King"] = ['Кр', '&#9812;'];
+            pieces["Queen"] = ['Ф', '&#9813;'];
+            pieces["Rook"] = ['Л', '&#9814;'];
+            pieces["Knight"] = ['К', '&#9816;'];
+            pieces["Bishop"] = ['С', '&#9815;'];
+            pieces["Pawn"] = ['П', '&#9817;'];
+
+            return pieces[piece][t];
+        }
+
+
+        function shessBoard() {
+            ///tmp
+            document.getElementById("output").innerHTML = "";
+            ///tmp
+
+            var table = document.createElement("table");
+            var tr, td;
+            var wh = 1;
+            var letter = " abcdefgh ";
+            for (var i = 0; i < 10; i++) {
+                tr = document.createElement("tr");
+                table.append(tr);
+                for (var j = 0; j < 10; j++) {
+                    td = document.createElement("td");
+                    if (i == 0 || i == 9) {
+                        td.innerText = letter.charAt(j);
+                        td.setAttribute("class", "border");
+                        if (i==0){
+                            td.classList.add("class", "rotate");
+                        }
+                    }
+                    else if (j == 0 || j == 9) {
+                        td.innerText = 9 - i;
+                        td.setAttribute("class", "border");
+                        if (j==9){
+                            td.classList.add("class", "rotate");
+                        }
+                    }
+                    else {
+                        if (wh) {
+                            td.innerText = "";
+                            td.setAttribute("class", "wh");
+                            wh = 0;
+                        }
+                        else {
+                            td.innerText = "";
+                            td.setAttribute("class", "bl");
+                            wh = 1;
+                        }
+                        if (j == 8) {
+                            wh = 1 - wh;
+                        }
+                        td.setAttribute("id", letter.charAt(j) + (9 - i));
+                    }
+                    tr.append(td);
+                }
+            }
+            document.getElementById("output").appendChild(table);
+        }
+
+        function arrangement(pieses, color, t) {
+            keys = Object.keys(pieses);
+            for (var key of keys) {
+                document.getElementById(pieses[key]["position"]).innerHTML = "<span class='" + color + "'>" + designation(pieses[key]["piece"], t) + "</span>";
+            }
+        }
+
+        function task_1() {
+            shessBoard();
         }
 
         function task_2() {
-            var admin = "";
-            var name = "Василий";
-            admin = name;
-            alert("admin - " + admin);
+            shessBoard();
+            arrangement(whitePieces, "white", 0);
+            arrangement(blackPieces, "black", 0);
+
         }
 
-        function task_5() {
-            var a = 10;
-            var b = 20;
-            msg = "Было: a=" + a + "; b=" + b;
-            b = b + a;
-            a = b - a;
-            b = b - a;
-
-            alert(msg + "\nСтало: a=" + a + "; b=" + b);
+        function task_3() {
+            shessBoard();
+            arrangement(whitePieces, "white", 1);
+            arrangement(blackPieces, "black", 1);
         }
 
     </script>
@@ -51,15 +238,10 @@
 
     <h2><a href="#" onclick="task_1();">Задание №1</a></h2>
     <h2><a href="#" onclick="task_2();">Задание №2</a></h2>
-    <h2>Задание №3</h2>
-    <p>Будет выведено 1000108</p>
-    <h2>Задание №4</h2>
-    <p>Async и defer не блокируют отрисовку страницы.</p>
-    <P>На практике defer используется для скриптов, которым требуется доступ ко всему DOM и/или важен их относительный
-        порядок выполнения.</p>
-    <p>А async хорош для независимых скриптов, например счётчиков и рекламы, относительный порядок выполнения которых не
-        играет роли.</p>
-    <h2><a href="#" onclick="task_5();">Задание №5</a></h2>
+    <h2><a href="#" onclick="task_3();">Задание №3</a></h2>
+    <div id="output"></div>
+
+
 
 </body>
 
