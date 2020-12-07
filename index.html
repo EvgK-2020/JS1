@@ -4,45 +4,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesson 1</title>
+    <title>Lesson 6</title>
+
+
+    <link rel="stylesheet" href="css.css">
 
     <script>
-        function task_1() {
-            var cT;
-            var msg;
-            var fT;
-            var userC = prompt("Задайте температуру в градусах Цельсия");
-            cT = userC.replace(/[^0-9+.-]/g, "");
-            msg = "Введено: " + userC + "\n";
-            msg += "Берем " + cT + "\u00b0C \n";
-            if (cT == "") {
-                cT = 0;
-                msg = "В строке " + userC + " нет значения. Берем 0\u00b0C \n";
-            }
-
-            fT = (9 / 5) * cT + 32;
-            msg += "Получаем " + fT + "\u00b0F";
-            alert(msg);
+        function chImage(e) {
+            var bigImage = document.getElementById("big_img");
+            bigImage.innerHTML = "";
+            var eventElement = e.target;
+            var file = document.getElementById(eventElement.id).getAttribute("src").split("/").pop();
+            var imageDomElement = document.createElement("img");
+            imageDomElement.src = "img/big_img/" + file;
+            imageDomElement.setAttribute("id", "image_full");
+            bigImage.appendChild(imageDomElement).onerror = function () {
+                alert("Ошибка во время загрузки большого изображения:\n" + file);
+                bigImage.innerHTML = "";
+            };
         }
+
+
+        function task_1() {
+            var o = document.getElementById("output");
+            o.innerHTML = "";
+            var t1 = '<div id="task1"><div class="wrp"><img id="img1" class="sm_img" src="img/sm_img/multicolor-drop-1.jpg" alt="Image"><img id="img2" class="sm_img" src="img/sm_img/multicolor-drop-2.jpg" alt="Image"><img id="img3" class="sm_img" src="img/sm_img/multicolor-drop-3.jpg" alt="Image"></div><div class="wrp"><div id="big_img" class="big_img"></div></div></div>';
+            o.insertAdjacentHTML('afterbegin', t1);
+
+            var img = document.querySelectorAll(".sm_img");
+            for (var item of img) {
+                item.onclick = chImage;
+            }
+        }
+
+        var cart = [];
+        var DB_goods = [];
 
         function task_2() {
-            var admin = "";
-            var name = "Василий";
-            admin = name;
-            alert("admin - " + admin);
+            var o = document.getElementById("output");
+            o.innerHTML = "";
+
+
+            DB_goods[0] = {
+                name: "Phone1",
+                img: "sm1.jpg",
+                descr: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis sit aque voluptatem eum? Consequatur, quos.",
+                price: 100
+            }
+
+            DB_goods[1] = {
+                name: "Phone2",
+                img: "sm2.jpg",
+                descr: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis sit eaque voluptatem eum? Consequatur, quos.",
+                price: 200
+            }
+
+            DB_goods[2] = {
+                name: "Phone3",
+                img: "sm3.png",
+                descr: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis sit eaque voluptatem eum? Consequatur, quos.",
+                price: 300
+            }
+
+            DB_goods[3] = {
+                name: "Phone4",
+                img: "sm4.jpg",
+                descr: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis sit eaque voluptatem eum? Consequatur, quos.",
+                price: 400
+            }
+
+            DB_goods[4] = {
+                name: "Phone5",
+                img: "sm5.jpg",
+                descr: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis sit eaque voluptatem eum? Consequatur, quos.",
+                price: 500
+            }
+
+            DB_goods[5] = {
+                name: "Phone6",
+                img: "sm6.jpg",
+                descr: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis sit eaque voluptatem eum? Consequatur, quos.",
+                price: 600
+            }
+
+            var c;
+            c = '<div class="wrp">' +
+                '<div class="goods" id=goods></div>' +
+                '<div class="modal close" id="modal"></div>' +
+                '<div class="menu_cart" onclick="showCart();">&#128722;</div>' +
+                '</div>';
+            o.insertAdjacentHTML('beforeend', c);
+
+            for (var i = 0; i < DB_goods.length; i++) {
+                c = '<div class="wrp_product">' +
+                    '<img src="img/sm_img/' + DB_goods[i]["img"] + '" alt="' + DB_goods[i]["name"] + '">' +
+                    '<h2>' + DB_goods[i]["name"] + '</h2>' +
+                    '<p>' + DB_goods[i]["descr"] +
+                    '<h3>Цена - ' + DB_goods[i]["price"] + '$</h3>' +
+                    '<button id="but_product_' + i + '" class="button">купить</button>' +
+                    '</div>';
+                document.getElementById("goods").insertAdjacentHTML('beforeend', c);
+            }
+
+            var but = document.querySelectorAll(".button");
+            for (var item of but) {
+                item.onclick = addToCart;
+            }
         }
 
-        function task_5() {
-            var a = 10;
-            var b = 20;
-            msg = "Было: a=" + a + "; b=" + b;
-            b = b + a;
-            a = b - a;
-            b = b - a;
-
-            alert(msg + "\nСтало: a=" + a + "; b=" + b);
+        function addToCart(e) {
+            var product = e.target.id.replace(/[^0-9]/g, "");
+            cart.push(product);
         }
 
+        function showCart() {
+            var darkLayer = document.createElement('div');
+            darkLayer.id = 'shadow';
+            document.body.appendChild(darkLayer);
+
+            var modalWin = document.getElementById('modal');
+            modalWin.classList.remove("close");
+
+            darkLayer.onclick = function () {
+                darkLayer.parentNode.removeChild(darkLayer);
+                modalWin.classList.add("close");
+                return false;
+            };
+            showItemCart();
+        }
+
+        function showItemCart() {
+            var cont = '<h2>Корзина</h2>' +
+                '<table>' +
+                '<tr>' +
+                '<td>Наименование</td><td>Кол-во</td><td>Цена</td><td>Стоимость</td>'+
+                '</tr>';
+            var total = 0;
+
+            var m = {};
+            for (var elem of cart) {
+                if (m[elem] === undefined) {
+                    m[elem] = 1;
+                }
+                else {
+                    m[elem]++;
+                }
+            }
+
+// console.log(m);
+// console.log(cart);
+
+            for (var key in m) {
+                cont += "<tr>";
+                cont += "<td>" + DB_goods[key]["name"] + '</td><td>' + m[key] + '</td><td>' + DB_goods[key]["price"] + '</td><td>' + DB_goods[key]["price"] * m[key] + '</td>';
+                cont += "</tr>";
+                total += DB_goods[key]["price"] * m[key];
+            }
+
+
+
+
+            cont += "<tr><td colspan='3'><b>ИТОГО:</b></td><td><b>"+total+"</b></td></tr></table>";
+            document.getElementById("modal").innerHTML="";
+            document.getElementById("modal").insertAdjacentHTML('beforeend', cont);
+        }
+
+
+
+
+        function chImageArrow(e) {
+            var action = e.target.id;
+            var current = document.querySelector("#image_full").getAttribute("src").split("/").pop();
+            var img = document.querySelectorAll(".sm_img");
+            var i = 0;
+            for (var item of img) {
+                if (item.src.split("/").pop() == current) {
+                    break;
+                };
+                i++;
+            }
+
+            if (action == "arrow_next") {
+                if (i < img.length - 1) {
+                    i++;
+                }
+                else {
+                    i = 0;
+                }
+            }
+
+            if (action == "arrow_prev") {
+                if (i == 0) {
+                    i = img.length - 1;
+                }
+                else {
+                    i--;
+                }
+            }
+            document.querySelector("#image_full").setAttribute("src", "img/big_img/" + img[i].src.split("/").pop());
+        }
+
+        function task_3() {
+            var o = document.getElementById("output");
+            o.innerHTML = "";
+            var t3 = '<div id="task3"><div class="wrp"><img id="img1" class="sm_img" src="img/sm_img/multicolor-drop-1.jpg" alt="Image"><img id="img2" class="sm_img" src="img/sm_img/multicolor-drop-2.jpg" alt="Image"><img id="img3" class="sm_img" src="img/sm_img/multicolor-drop-33.jpg" alt="Image"></div><div class="wrp"><div class="arrows" id="arrow_prev">&#129128;</div><div id="big_img" class="big_img"></div><div class="arrows" id="arrow_next">&#129130;</div></div></div>';
+            o.insertAdjacentHTML('afterbegin', t3);
+
+            var img = document.querySelectorAll(".sm_img");
+            for (var item of img) {
+                item.onclick = chImage;
+
+            }
+            document.querySelector("#img1").click();
+
+            for (item of document.querySelectorAll(".arrows")) {
+                item.onclick = chImageArrow;
+            }
+
+
+        }
     </script>
 
 </head>
@@ -51,16 +231,10 @@
 
     <h2><a href="#" onclick="task_1();">Задание №1</a></h2>
     <h2><a href="#" onclick="task_2();">Задание №2</a></h2>
-    <h2>Задание №3</h2>
-    <p>Будет выведено 1000108</p>
-    <h2>Задание №4</h2>
-    <p>Async и defer не блокируют отрисовку страницы.</p>
-    <P>На практике defer используется для скриптов, которым требуется доступ ко всему DOM и/или важен их относительный
-        порядок выполнения.</p>
-    <p>А async хорош для независимых скриптов, например счётчиков и рекламы, относительный порядок выполнения которых не
-        играет роли.</p>
-    <h2><a href="#" onclick="task_5();">Задание №5</a></h2>
-
+    <h2><a href="#" onclick="task_3();">Задание №3</a></h2>
 </body>
+<div id="output">
+
+</div>
 
 </html>
